@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iksha | Artificial Jewelry by Samiksha Phadke</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              serif: ['"Cormorant Garamond"', 'serif'],
+              sans: ['"Montserrat"', 'sans-serif'],
+            },
+            colors: {
+              gold: {
+                50: '#F9F7F2',
+                100: '#F4EFE6',
+                200: '#E6DCC9',
+                300: '#D6C0A0',
+                400: '#C2A676',
+                500: '#B08D55', // Muted metallic gold
+                600: '#8C6B3D',
+                700: '#6B502C',
+                800: '#4A371F',
+                900: '#2D2112',
+              },
+              brand: {
+                dark: '#0A0A0A', // Richer black
+                charcoal: '#1C1C1C',
+                light: '#FFFEFA', // Warm white
+                gray: '#F5F5F5'
+              }
+            },
+            letterSpacing: {
+              'ultra': '0.3em',
+            },
+            animation: {
+              'marquee': 'marquee 25s linear infinite',
+            },
+            keyframes: {
+              marquee: {
+                '0%': { transform: 'translateX(0%)' },
+                '100%': { transform: 'translateX(-100%)' },
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      /* Hide default cursor on desktop */
+      @media (min-width: 768px) {
+        body {
+          cursor: none;
+        }
+        a, button, input, textarea {
+          cursor: none;
+        }
+      }
+
+      /* Custom scrollbar for webkit */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #FAFAFA; 
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #D6C0A0; 
+        border-radius: 3px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #B08D55; 
+      }
+      
+      .fade-in-up {
+        animation: fadeInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      .delay-100 { animation-delay: 0.1s; }
+      .delay-200 { animation-delay: 0.2s; }
+      .delay-300 { animation-delay: 0.3s; }
+      
+      /* Smooth Image Reveal */
+      .reveal-img {
+        clip-path: inset(0 0 100% 0);
+        transition: clip-path 1.5s cubic-bezier(0.77, 0, 0.175, 1);
+      }
+      .reveal-img.active {
+        clip-path: inset(0 0 0 0);
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "@google/genai": "https://esm.sh/@google/genai@^1.41.0",
+    "lucide-react": "https://esm.sh/lucide-react@^0.564.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react": "https://esm.sh/react@^19.2.4",
+    "react-router-dom": "https://esm.sh/react-router-dom@^7.13.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-brand-light text-brand-dark font-sans antialiased selection:bg-gold-200 selection:text-brand-dark">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
