@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Heart, ShoppingBag } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { useAppContext } from '../context/AppContext';
 
 const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const { wishlist, cart, setIsCartOpen } = useAppContext();
 
   // Close menu when route changes
   useEffect(() => {
@@ -28,6 +30,8 @@ const Header: React.FC = () => {
     { label: 'CONTACT US', path: '/contact' },
   ];
 
+  const cartItemCount = cart.reduce((total, item) => total + item.quantity, 0);
+
   return (
     <>
       {/* Floating Minimal Header Buttons */}
@@ -42,13 +46,39 @@ const Header: React.FC = () => {
           </div>
         </Link>
 
-        {/* Hamburger Menu Trigger */}
-        <button 
-          onClick={() => setIsOpen(true)} 
-          className="pointer-events-auto group hover:scale-110 transition-transform duration-300"
-        >
-          <Menu size={32} strokeWidth={1} className="w-8 h-8 md:w-10 md:h-10 text-current" />
-        </button>
+        {/* Right Actions */}
+        <div className="flex items-center gap-6 pointer-events-auto">
+          <Link to="/wishlist" className="relative group hover:scale-110 transition-transform duration-300" aria-label="Wishlist">
+            <Heart size={28} strokeWidth={1.5} className="w-7 h-7 md:w-8 md:h-8 text-current group-hover:text-gold-300 transition-colors" />
+            {wishlist.length > 0 && (
+              <span className="absolute -top-1 -right-2 bg-gold-500 text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full font-bold">
+                {wishlist.length}
+              </span>
+            )}
+          </Link>
+
+          <button 
+            onClick={() => setIsCartOpen(true)}
+            className="relative group hover:scale-110 transition-transform duration-300"
+            aria-label="Shopping Cart"
+          >
+            <ShoppingBag size={28} strokeWidth={1.5} className="w-7 h-7 md:w-8 md:h-8 text-current group-hover:text-gold-300 transition-colors" />
+            {cartItemCount > 0 && (
+              <span className="absolute -top-1 -right-2 bg-gold-500 text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full font-bold">
+                {cartItemCount}
+              </span>
+            )}
+          </button>
+
+          {/* Hamburger Menu Trigger */}
+          <button 
+            onClick={() => setIsOpen(true)} 
+            className="group hover:scale-110 transition-transform duration-300"
+            aria-label="Open Menu"
+          >
+            <Menu size={32} strokeWidth={1} className="w-8 h-8 md:w-10 md:h-10 text-current group-hover:text-gold-300 transition-colors" />
+          </button>
+        </div>
       </header>
 
       {/* Full Screen Menu Overlay */}
@@ -65,6 +95,7 @@ const Header: React.FC = () => {
             <button 
               onClick={() => setIsOpen(false)}
               className="absolute top-8 right-8 md:top-10 md:right-12 text-brand-dark hover:text-gold-600 transition-colors z-20 hover:rotate-90 duration-500"
+              aria-label="Close Menu"
             >
               <X size={32} strokeWidth={1} className="w-8 h-8 md:w-10 md:h-10" />
             </button>
@@ -89,6 +120,21 @@ const Header: React.FC = () => {
                   </Link>
                 </motion.div>
               ))}
+              <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 50 }}
+                transition={{ duration: 0.5, delay: 0.2 + navLinks.length * 0.1, ease: "easeOut" }}
+              >
+                <Link
+                  to="/wishlist"
+                  className={`font-serif text-3xl md:text-5xl tracking-widest uppercase transition-all duration-300 hover:text-gold-600 hover:scale-105 block ${
+                    location.pathname === '/wishlist' ? 'text-brand-dark font-medium' : 'text-brand-dark/80'
+                  }`}
+                >
+                  WISHLIST
+                </Link>
+              </motion.div>
             </nav>
 
             {/* Watermark Logo at Bottom */}

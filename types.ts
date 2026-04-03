@@ -3,6 +3,12 @@ export interface Product {
   name: string;
   image: string;
   category: string;
+  price: number;
+  description: string;
+}
+
+export interface CartItem extends Product {
+  quantity: number;
 }
 
 export interface NavItem {
